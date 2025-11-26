@@ -1,6 +1,7 @@
-#pragma once
 
-// forward declaration pour éviter inclusion cyclique
+#pragma once
+#include <memory>
+
 class Regle;
 
 class Cellule {
@@ -9,20 +10,20 @@ protected:
     bool etatFutur;
 
 public:
-    Cellule(bool etat = false);
-    virtual ~Cellule() = default;
+    explicit Cellule(bool etat = false);
+    virtual ~Cellule();
 
-    // calculer l'état futur en délégant au calcul de la règle
-    virtual void calculerEtatFutur(const Regle& regle, int nbVoisinsVivants) = 0;
+    // calcul de l'état futur (délégué à la Regle)
+    void calculerEtatFutur(const Regle& regle, int nbVoisinsVivants);
 
     // applique l'état futur -> devient l'état actuel
     void appliquerEtatFutur();
 
     // accesseurs
     bool estVivante() const;
-    void setEtatFutur(bool nouvelEtat);
     bool getEtatFutur() const;
+    void setEtatFutur(bool nouvelEtat);
 
-    // retourne un caractère pour affichage console ('#' = vivante, '.' = morte)
+    // doit être défini par les classes concrètes pour affichage
     virtual char afficher() const = 0;
 };
