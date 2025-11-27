@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include "Cellule.h"   // <- assure le type complet pour tous les TU qui incluent Grille.h
+#include "Cellule.h"
 class Regle;
 
 class Grille {
@@ -14,7 +14,7 @@ private:
 
 public:
     Grille(int largeur, int hauteur);
-    ~Grille(); // défini dans Grille.cpp, afin que Cellule soit complet à la destruction
+    ~Grille();
 
     void libererCellules();
 
@@ -32,4 +32,7 @@ public:
     bool dansBornes(int x, int y) const;
 
     void chargerDepuisFichier(const std::string& filename);
+
+    // NOUVEAU : compter toutes les cellules vivantes
+    
 };

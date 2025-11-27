@@ -75,7 +75,7 @@ int main() {
             jeu.mettreAJour();
             iteration++;
 
-            this_thread::sleep_for(chrono::milliseconds(500));
+            this_thread::sleep_for(chrono::milliseconds(50));
         }
     }
     else if (choix == 2) {

@@ -30,7 +30,7 @@ void FenetreSFML::afficher() {
                 Cellule* c = g.getCellule(j, i);
 
                 if (!c) {
-                    std::cerr<< "[ERREUR SFML] Cellule nulle en j=" << j << ", i=" << i << std::endl;
+                    std::cerr << "[ERREUR SFML] Cellule nulle en j=" << j << ", i=" << i << std::endl;
                     continue;
                 }
 
@@ -44,7 +44,7 @@ void FenetreSFML::afficher() {
                     static_cast<float>(i * tailleCase)
                 );
 
-                cell.setFillColor(c->estVivante() ? sf::Color::White : sf::Color::Black);
+                cell.setFillColor(c->estVivante() ? sf::Color::Red : sf::Color::Black);
 
                 window.draw(cell);
             }
