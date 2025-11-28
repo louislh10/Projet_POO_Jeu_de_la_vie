@@ -62,8 +62,15 @@ int main() {
 
     if (choix == 1) {
         // Mode console
+        int max_iter;
+        cout << "Entrez le nb iter : ";
+        while (!(cin >> max_iter) || max_iter <= 0) {
+            cerr << "Entrée invalide. Veuillez entrer un nombre positif.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
         int iteration = 0;
-        while (true) {
+        while (iteration < max_iter) {
 #ifdef _WIN32
             system("cls");
 #else
@@ -74,6 +81,9 @@ int main() {
 
             jeu.mettreAJour();
             iteration++;
+
+			string path = fichier.substr(0, fichier.length()-4) + "_out/iter" + to_string(iteration) + ".txt";
+            jeu.sauvegarderDansFichier(path);
 
             this_thread::sleep_for(chrono::milliseconds(50));
         }
