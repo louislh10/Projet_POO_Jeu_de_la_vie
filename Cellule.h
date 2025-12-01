@@ -5,7 +5,7 @@
 class Regle;
 
 class Cellule {
-protected:
+protected: 
     bool etatActuel;
     bool etatFutur;
 
