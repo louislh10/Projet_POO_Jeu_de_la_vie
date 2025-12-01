@@ -3,7 +3,8 @@
 
 FenetreSFML::FenetreSFML(Jeu& j, int tailleCase)
     : jeu(j), tailleCase(tailleCase),
-    window(sf::VideoMode(static_cast<unsigned int>(j.getGrille().getLargeur()* tailleCase),
+    window(sf::VideoMode(
+        static_cast<unsigned int>(j.getGrille().getLargeur()* tailleCase),
         static_cast<unsigned int>(j.getGrille().getHauteur()* tailleCase)),
         "Jeu de la Vie - SFML") {
     if (j.getGrille().getLargeur() == 0 || j.getGrille().getHauteur() == 0) {
@@ -27,26 +28,26 @@ void FenetreSFML::afficher() {
 
         for (int i = 0; i < g.getHauteur(); ++i) {
             for (int j = 0; j < g.getLargeur(); ++j) {
-                Cellule* c = g.getCellule(j, i); 
+                Cellule* cellule = g.getCellule(j, i); 
 
-                if (!c) {
+                if (!cellule) {
                     std::cerr << "[ERREUR SFML] Cellule nulle en j=" << j << ", i=" << i << std::endl;
                     continue;
                 }
 
-                sf::RectangleShape cell(sf::Vector2f(
+                sf::RectangleShape forme(sf::Vector2f(
                     static_cast<float>(tailleCase - 1),
                     static_cast<float>(tailleCase - 1)
                 ));
 
-                cell.setPosition(
+                forme.setPosition(
                     static_cast<float>(j * tailleCase),
                     static_cast<float>(i * tailleCase)
                 );
 
-                cell.setFillColor(c->estVivante() ? sf::Color::Cyan : sf::Color::Black);
+                forme.setFillColor(cellule->estVivante() ? sf::Color::Cyan : sf::Color::Black);
 
-                window.draw(cell);
+                window.draw(forme);
             }
         }
 

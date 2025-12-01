@@ -27,7 +27,7 @@
     <ClCompile Include="CelluleMorte.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="RegleConway.cpp">
+    <ClCompile Include="RegleC.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Grille.cpp">
@@ -56,7 +56,7 @@
     <ClInclude Include="Regle.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="RegleConway.h">
+    <ClInclude Include="RegleC.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Jeu.h">

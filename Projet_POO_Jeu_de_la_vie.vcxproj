@@ -134,7 +134,7 @@
     <ClCompile Include="Grille.cpp" />
     <ClCompile Include="Jeu.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RegleConway.cpp" />
+    <ClCompile Include="RegleC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cellule.h" />
@@ -144,7 +144,7 @@
     <ClInclude Include="Grille.h" />
     <ClInclude Include="Jeu.h" />
     <ClInclude Include="Regle.h" />
-    <ClInclude Include="RegleConway.h" />
+    <ClInclude Include="RegleC.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="testfichier.txt" />

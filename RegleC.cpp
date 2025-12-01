@@ -1,9 +1,9 @@
-#include "RegleConway.h"
+#include "RegleC.h"
 
 // Règle de Conway : 
 // - une cellule vivante survit si elle a 2 ou 3 voisins vivants
 // - une cellule morte devient vivante si elle a exactement 3 voisins vivants
-bool RegleConway::doitVivre(bool estVivante, int nbVoisinsVivants) const {
+bool RegleC::doitVivre(bool estVivante, int nbVoisinsVivants) const {
     if (estVivante) {
         return (nbVoisinsVivants == 2 || nbVoisinsVivants == 3);
     }

@@ -30,8 +30,12 @@ void Grille::libererCellules() {
 }
 
 // Accesseurs
-int Grille::getLargeur() const { return largeur; }
-int Grille::getHauteur() const { return hauteur; }
+int Grille::getLargeur() const { 
+    return largeur; 
+}
+int Grille::getHauteur() const { 
+    return hauteur; 
+}
 
 void Grille::setCelluleVivante(int x, int y) {
     if (!dansBornes(x, y)) {
@@ -64,8 +68,8 @@ bool Grille::dansBornes(int x, int y) const {
     return x >= 0 && x < largeur && y >= 0 && y < hauteur;
 }
 
-int Grille::compterVoisinsVivants(int x, int y) const { 
-	auto wrap = [](int v, int max) -> int { // le wrapping sert à boucler une grille, récupère la posi
+int Grille::compterVoisinsVivants(int x, int y) const { //impl de la grille torique
+	auto wrap = [](int v, int max) -> int { //  sert a boucler une grille
         int r = v % max; 
         if (r < 0) r += max; 
         return r;

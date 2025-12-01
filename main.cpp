@@ -2,7 +2,7 @@
 #include <thread>
 #include <chrono>
 #include "Jeu.h"
-#include "RegleConway.h"
+#include "RegleC.h"
 #include "FenetreSFML.h"
 #include "Cellule.h" // AJOUT : inclure le header complet de Cellule
 
@@ -14,12 +14,11 @@ void afficherConsole(const Jeu& jeu) {
     for (int y = 0; y < g.getHauteur(); ++y) {
         for (int x = 0; x < g.getLargeur(); ++x) {
             Cellule* c = g.getCellule(x, y);
-            // Vérification de nullité pour éviter le crash lors du déréférencement
             if (c != nullptr) {
-                cout << (c->estVivante() ? '#' : '.');
+                cout << (c->estVivante() ? '#' : '.'); // choix d'utilisé # a la place 1 et . a la place du 0 pour une meilleure visibilité en mode console
             }
             else {
-                cout << '.'; // cellule invalide affichée comme morte
+                cout << '.'; 
             }
         }
         cout << "\n";
@@ -28,9 +27,9 @@ void afficherConsole(const Jeu& jeu) {
 }
 
 int main() {
-    cout << "=== Jeu de la Vie - Conway ===\n";
+    cout << " Jeu de la Vie de Louis Le Hel et Louis Fritz- John Conway \n";
     cout << "1 - Mode console\n";
-    cout << "2 - Mode graphique (SFML)\n";
+    cout << "2 - Mode graphique avec la fenetre SFML\n";
     cout << "Votre choix : ";
 
     int choix;
@@ -40,34 +39,34 @@ int main() {
     }
 
     string fichier;
-    cout << "Entrez le fichier de configuration (ex: testfichier.txt) : ";
+    cout << "Entrez le fichier de configuration (testfichier.txt) : ";
     if (!(cin >> fichier)) {
-        cerr << "Nom de fichier invalide.\n";
+        cerr << "nom fichier invalide.\n";
         return 1;
     }
 
-    // Création du jeu avec la règle de Conway
-    Jeu jeu(1, 1, make_unique<RegleConway>());
+    // creation jeu
+    Jeu jeu(1, 1, make_unique<RegleC>());
 
-    try {
+    try { 
         jeu.chargerDepuisFichier(fichier);
     }
-    catch (const exception& e) {
-        cerr << "Erreur : " << e.what() << endl;
+    catch (const exception& e) { 
+        cerr << "erreur : " << e.what() << endl;
         return 1;
     }
 
-    cout << "\nGrille initiale :\n";
+    cout << "\n Grille initiale de testfichier.txt :\n";
     afficherConsole(jeu);
 
-    if (choix == 1) {
-        // Mode console
+    if (choix == 1) { // Mode console
         int max_iter;
-        cout << "Entrez le nb iter : ";
+        cout << "Entrez le nb iterations de votre choix : ";
         while (!(cin >> max_iter) || max_iter <= 0) {
-            cerr << "Entrée invalide. Veuillez entrer un nombre positif.\n";
+            cerr << "Entree non valide..\n";
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // le buffer signifie qu'on vide le flux d'entrée pour éviter une boucle infinie
+			cout << "Entrez le nb iterations de votre choix : ";
         }
         int iteration = 0;
         while (iteration < max_iter) {
@@ -76,7 +75,7 @@ int main() {
 #else
             system("clear");
 #endif
-            cout << "=== Iteration " << iteration << " ===\n";
+            cout << "Iteration numero : " << iteration << " \n";
             afficherConsole(jeu);
 
             jeu.mettreAJour();
@@ -85,16 +84,15 @@ int main() {
 			string path = fichier.substr(0, fichier.length()-4) + "_out/iter" + to_string(iteration) + ".txt";
             jeu.sauvegarderDansFichier(path);
 
-            this_thread::sleep_for(chrono::milliseconds(50));
+            this_thread::sleep_for(chrono::milliseconds(500));
         }
     }
-    else if (choix == 2) {
-        // Mode graphique SFML
+    else if (choix == 2) {  // Mode graphique avec SFML
         FenetreSFML fenetre(jeu, 20);
         fenetre.afficher();
     }
     else {
-        cout << "Choix invalide.\n";
+        cout << "choix non valide.\n";
     }
 
     return 0;

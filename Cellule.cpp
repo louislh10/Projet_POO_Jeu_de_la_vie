@@ -5,8 +5,7 @@ Cellule::Cellule(bool etat) : etatActuel(etat), etatFutur(etat) {}
 
 Cellule::~Cellule() = default;
 
-void Cellule::calculerEtatFutur(const Regle& regle, int nbVoisinsVivants) {
-    // déléguer la logique à la règle
+void Cellule::calculerEtatFutur(const Regle& regle, int nbVoisinsVivants) { // permet de calculer l' etat futur de la cellule 
     etatFutur = regle.doitVivre(etatActuel, nbVoisinsVivants);
 }
 

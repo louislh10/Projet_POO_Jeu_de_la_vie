@@ -33,6 +33,7 @@ public:
 
     void chargerDepuisFichier(const std::string& filename);
 
-    // NOUVEAU : compter toutes les cellules vivantes
+    void initialiserDepuisMatrice(const std::vector<std::vector<int>>& mat);
+
     
 };
