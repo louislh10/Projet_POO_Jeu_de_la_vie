@@ -1,4 +1,3 @@
-
 #include "pch.h"
 #include "CppUnitTest.h"
 
@@ -24,7 +23,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ProjetPOOJeudelavietest
 {
-    static const int ITERATIONS = 5; 
+    static const int ITERATIONS = 5;
 
     TEST_CLASS(SimpleFileBasedTest)
     {
@@ -32,11 +31,11 @@ namespace ProjetPOOJeudelavietest
 
         TEST_METHOD(Test_SaveAfterNIterations)
         {
-            const std::string inputFile = "testfichier.txt"; 
+            const std::string inputFile = "testfichier.txt";
             const std::string outDirBase = "testfichier_out";
             const std::string outPath = outDirBase + "/iter_" + std::to_string(ITERATIONS) + ".txt";
 
-           // on charge le jeu
+            // on charge le jeu
             Jeu jeu(1, 1, std::make_unique<RegleC>());
             try {
                 jeu.chargerDepuisFichier(inputFile);
@@ -45,7 +44,7 @@ namespace ProjetPOOJeudelavietest
                 Assert::Fail((L"Échec lecture fichier: " + std::wstring(e.what(), e.what() + strlen(e.what()))).c_str());
             }
 
-            
+
             for (int i = 0; i < ITERATIONS; ++i) {
                 jeu.mettreAJour();
             }
@@ -55,7 +54,7 @@ namespace ProjetPOOJeudelavietest
             catch (const std::exception& e) {
                 Assert::Fail((L"Échec écriture fichier: " + std::wstring(e.what(), e.what() + strlen(e.what()))).c_str());
             }
-// maintenant, testons que le fichier de sortie existe et n'est pas vide
+            // maintenant, testons que le fichier de sortie existe et n'est pas vide
             std::ifstream f(outPath);
             Assert::IsTrue(f.is_open(), L"Le fichier de sortie n'a pas été créé.");
             f.seekg(0, std::ios::end);
