@@ -84,7 +84,7 @@ int main() {
 			string path = fichier.substr(0, fichier.length()-4) + "_out/iter" + to_string(iteration) + ".txt";
             jeu.sauvegarderDansFichier(path);
 
-            this_thread::sleep_for(chrono::milliseconds(500));
+            this_thread::sleep_for(chrono::milliseconds(50));
         }
     }
     else if (choix == 2) {  // Mode graphique avec SFML

@@ -167,3 +167,15 @@ void Grille::initialiserDepuisMatrice(const std::vector<std::vector<int>>& mat) 
         }
     }
 }
+
+std::vector<std::vector<int>> Grille::convertirEnMatrice() {
+    std::vector<std::vector<int>> mat(hauteur, std::vector<int>(largeur, 0));
+    for (int y = 0; y < hauteur; ++y) {
+        for (int x = 0; x < largeur; ++x) {
+            if (cellules[y][x] && cellules[y][x]->estVivante()) {
+                mat[y][x] = 1;
+            }
+        }
+    }
+    return mat;
+}

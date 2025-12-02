@@ -35,5 +35,6 @@ public:
 
     void initialiserDepuisMatrice(const std::vector<std::vector<int>>& mat);
 
-    
+    std::vector<std::vector<int>> convertirEnMatrice();
+
 };
