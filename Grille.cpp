@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <iostream>
 
-// Constructeur
+
 Grille::Grille(int l, int h) : largeur(l), hauteur(h) {
     cellules.resize(hauteur);
     for (int y = 0; y < hauteur; ++y) {
@@ -132,7 +132,7 @@ void Grille::chargerDepuisFichier(const std::string& filename) {
     cellules.clear();
     cellules.resize(hauteur);
     for (int y = 0; y < hauteur; ++y) {
-        cellules[y].resize(largeur); // default-construct unique_ptr (null)
+        cellules[y].resize(largeur);
     }
 
     for (int y = 0; y < hauteur; ++y) { //
@@ -168,7 +168,7 @@ void Grille::initialiserDepuisMatrice(const std::vector<std::vector<int>>& mat) 
     }
 }
 
-std::vector<std::vector<int>> Grille::convertirEnMatrice() {
+std::vector<std::vector<int>> Grille::convertirEnMatrice() { //fonction utilisée dans la partie tests
     std::vector<std::vector<int>> mat(hauteur, std::vector<int>(largeur, 0));
     for (int y = 0; y < hauteur; ++y) {
         for (int x = 0; x < largeur; ++x) {

@@ -24,7 +24,7 @@ namespace ProjetPOOJeudelaviedesLouistest
     {
     public:
 
-        TEST_METHOD(Blockstill_life)
+        TEST_METHOD(Blockstill_life)// cette grile doit quoi qu'il arrive ne pas bouger 
         {
             std::vector<std::vector<int>> blockinitial = {
                 {0,0,0,0},
@@ -45,7 +45,7 @@ namespace ProjetPOOJeudelaviedesLouistest
             int h = static_cast<int>(blockinitial.size());
             int w = static_cast<int>(blockinitial[0].size());
 
-            Grille g(w, h);           // constructeur (largeur, hauteur)
+            Grille g(w, h);           
             g.initialiserDepuisMatrice(blockinitial);
 
             RegleC rule;
@@ -55,13 +55,13 @@ namespace ProjetPOOJeudelaviedesLouistest
 
             std::vector<std::vector<int>> matOut = g.convertirEnMatrice();
 
-            Assert::AreEqual(blockattendu.size(), matOut.size());
+            Assert::AreEqual(blockattendu.size(), matOut.size()); 
 
-            for (size_t i = 0; i < blockattendu.size(); ++i)
+			for (size_t i = 0; i < blockattendu.size(); ++i) //permet de comparer chaque ligne
             {
                 Assert::AreEqual(blockattendu[i].size(), matOut[i].size());
 
-                for (size_t j = 0; j < blockattendu[i].size(); ++j)
+				for (size_t j = 0; j < blockattendu[i].size(); ++j) //permet de comparer chaque élément de la ligne
                 {
                     Assert::AreEqual(blockattendu[i][j], matOut[i][j]);
                 }
