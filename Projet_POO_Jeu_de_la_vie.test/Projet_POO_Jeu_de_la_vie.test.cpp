@@ -24,7 +24,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ProjetPOOJeudelavietest
 {
-    // Test des structures stables
+  
     TEST_CLASS(TestGrilleSimple)
     {
     public:
@@ -65,7 +65,7 @@ namespace ProjetPOOJeudelavietest
         }
     };
 
-    // Test de la sauvegarde après N itérations
+   
     TEST_CLASS(vérification_enregistrement_fichier)
     {
     public:
@@ -86,12 +86,12 @@ namespace ProjetPOOJeudelavietest
                 Assert::Fail((L"Échec lecture fichier: " + std::wstring(e.what(), e.what() + strlen(e.what()))).c_str());
             }
 
-            // Appliquer ITERATIONS mises à jour
+        
             for (int i = 0; i < iter; ++i) {
                 jeu.mettreAJour();
             }
 
-            // Sauvegarde dans un fichier
+            
             try {
                 jeu.sauvegarderDansFichier(outPath);
             }

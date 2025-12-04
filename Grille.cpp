@@ -7,7 +7,7 @@
 #include <iostream>
 
 
-Grille::Grille(int l, int h) : largeur(l), hauteur(h) {
+Grille::Grille(int l, int h) : largeur(l), hauteur(h) { // 
     cellules.resize(hauteur);
     for (int y = 0; y < hauteur; ++y) {
         cellules[y].resize(largeur);
@@ -17,11 +17,10 @@ Grille::Grille(int l, int h) : largeur(l), hauteur(h) {
     }
 }
 
-// Définir le destructeur dans le .cpp pour que Cellule soit complet ici
 Grille::~Grille() = default;
 
-// Libérer toutes les cellules (réinitialiser les unique_ptr)
-void Grille::libererCellules() {
+// libérer toutes les cellules
+void Grille::libererCellules() { 
     for (int y = 0; y < hauteur; ++y) {
         for (int x = 0; x < largeur; ++x) {
             cellules[y][x].reset();
@@ -29,7 +28,7 @@ void Grille::libererCellules() {
     }
 }
 
-// Accesseurs
+
 int Grille::getLargeur() const { 
     return largeur; 
 }
@@ -126,7 +125,7 @@ void Grille::chargerDepuisFichier(const std::string& filename) {
 
     libererCellules();
 
-    // Redimensionner sans copier des vecteurs contenant des unique_ptr
+
     largeur = l;
     hauteur = h;
     cellules.clear();
@@ -150,8 +149,7 @@ void Grille::chargerDepuisFichier(const std::string& filename) {
 void Grille::initialiserDepuisMatrice(const std::vector<std::vector<int>>& mat) {
     if (mat.empty()) return;
     int h = static_cast<int>(mat.size());
-    int l = static_cast<int>(mat[0].size());
-    // redimensionner et initialiser
+    int l = static_cast<int>(mat[0].size()); 
     libererCellules();
     largeur = l;
     hauteur = h;

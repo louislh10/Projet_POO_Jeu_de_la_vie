@@ -5,9 +5,9 @@
 // - une cellule morte devient vivante si elle a exactement 3 voisins vivants
 bool RegleC::doitVivre(bool estVivante, int nbVoisinsVivants) const {
     if (estVivante) {
-        return (nbVoisinsVivants == 2 || nbVoisinsVivants == 3);
+        return (nbVoisinsVivants == 2 || nbVoisinsVivants == 3); 
     }
     else {
-        return (nbVoisinsVivants == 3);
+        return (nbVoisinsVivants == 3); 
     }
 }
