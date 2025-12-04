@@ -28,85 +28,95 @@ namespace ProjetPOOJeudelavietest
     TEST_CLASS(TestGrilleSimple)
     {
     public:
-        TEST_METHOD(Blockstill_life) // Cette grille doit rester stable
+        TEST_METHOD(Test_Block_Reste_Stable)
         {
-            std::vector<std::vector<int>> blockinitial = {
+            //grille initale 
+            std::vector<std::vector<int>> debut = {
                 {0,0,0,0},
                 {0,1,1,0},
                 {0,1,1,0},
                 {0,0,0,0}
             };
 
-            std::vector<std::vector<int>> blockattendu = blockinitial;
-            const int iter = 5;
+            // bloc censé rester pareil
+            std::vector<std::vector<int>> attendu = debut;
 
-            int h = static_cast<int>(blockinitial.size());
-            int w = static_cast<int>(blockinitial[0].size());
+            int h = static_cast<int>(debut.size());
+            int w = static_cast<int>(debut[0].size());
 
             Grille g(w, h);
-            g.initialiserDepuisMatrice(blockinitial);
+            g.initialiserDepuisMatrice(debut);
 
-            RegleC rule;
+            RegleC regle;
 
-            for (int i = 0; i < iter; ++i)
-                g.appliquerRegle(rule);
+            // 5 iter
+            for (int i = 0; i < 5; i++) {
+                g.appliquerRegle(regle);
+            }
 
-            std::vector<std::vector<int>> matOut = g.convertirEnMatrice();
+            
+            std::vector<std::vector<int>> resultat = g.convertirEnMatrice();
 
-            Assert::AreEqual(blockattendu.size(), matOut.size());
-            for (size_t i = 0; i < blockattendu.size(); ++i)
-            {
-                Assert::AreEqual(blockattendu[i].size(), matOut[i].size());
-                for (size_t j = 0; j < blockattendu[i].size(); ++j)
-                {
-                    Assert::AreEqual(blockattendu[i][j], matOut[i][j]);
+            
+            Assert::AreEqual(attendu.size(), resultat.size());
+
+            for (size_t i = 0; i < attendu.size(); i++) {
+                Assert::AreEqual(attendu[i].size(), resultat[i].size());
+                for (size_t j = 0; j < attendu[i].size(); j++) {
+                    Assert::AreEqual(attendu[i][j], resultat[i][j]);
                 }
             }
         }
     };
 
-   
-    TEST_CLASS(vérification_enregistrement_fichier)
+    //test de sauvegarde dans un fichier
+    TEST_CLASS(TestSauvegardeFichier)
     {
     public:
-        static const int iter = 5;
-
-        TEST_METHOD(Test_SaveAfterNIterations)
+        TEST_METHOD(Test_Sauvegarde_Apres_5_Iterations)
         {
-            const std::string inputFile = "testfichier.txt";
-            const std::string outDirBase = "testfichier_out";
-            const std::string outPath = outDirBase + "/iter_" + std::to_string(iter) + ".txt";
+            std::string fichierEntree = "testfichier.txt";
+            std::string fichierSortie = "testfichier_out/iter_5.txt";
 
-            // Création du jeu et chargement du fichier
+           
             Jeu jeu(1, 1, std::make_unique<RegleC>());
-            try {
-                jeu.chargerDepuisFichier(inputFile);
-            }
-            catch (const std::exception& e) {
-                Assert::Fail((L"Échec lecture fichier: " + std::wstring(e.what(), e.what() + strlen(e.what()))).c_str());
-            }
-
-        
-            for (int i = 0; i < iter; ++i) {
-                jeu.mettreAJour();
-            }
 
             
             try {
-                jeu.sauvegarderDansFichier(outPath);
+                jeu.chargerDepuisFichier(fichierEntree);
             }
             catch (const std::exception& e) {
-                Assert::Fail((L"Échec écriture fichier: " + std::wstring(e.what(), e.what() + strlen(e.what()))).c_str());
+                std::string msg = "Erreur lecture: ";
+                msg += e.what();
+                Assert::Fail(std::wstring(msg.begin(), msg.end()).c_str());
+            }
+            for (int i = 0; i < 5; i++) {
+                jeu.mettreAJour();
+            }
+            try {
+                jeu.sauvegarderDansFichier(fichierSortie);
+            }
+            catch (const std::exception& e) {
+                std::string msg = "Erreur sauvegarde: ";
+                msg += e.what();
+                Assert::Fail(std::wstring(msg.begin(), msg.end()).c_str());
             }
 
-            // Vérifier que le fichier de sortie existe et n'est pas vide
-            std::ifstream f(outPath);
-            Assert::IsTrue(f.is_open(), L"Le fichier de sortie n'a pas été créé.");
-            f.seekg(0, std::ios::end);
-            Assert::IsTrue(f.tellg() > 0, L"Le fichier de sortie est vide.");
+           //fichier contient bien qqch ?
+            std::ifstream fichier(fichierSortie);
+            Assert::IsTrue(fichier.is_open(), L"Le fichier n'a pas été créé");
+
+            //verif pas vide
+            std::string ligne;
+            bool pasVide = false;
+            while (std::getline(fichier, ligne)) {
+                if (!ligne.empty()) {
+                    pasVide = true;
+                    break;
+                }
+            }
+
+            Assert::IsTrue(pasVide, L"Le fichier est vide");
+            fichier.close();
         }
     };
-    
-
-    
-}

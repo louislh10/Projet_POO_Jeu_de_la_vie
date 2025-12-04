@@ -68,9 +68,9 @@ bool Grille::dansBornes(int x, int y) const {
 }
 
 int Grille::compterVoisinsVivants(int x, int y) const { //impl de la grille torique
-	auto wrap = [](int v, int max) -> int { //  sert a boucler une grille
-        int r = v % max; 
-        if (r < 0) r += max; 
+	auto boucle = [](int coord, int taille) -> int { //  sert a boucler une grille
+        int r = coord % taille; 
+        if (r < 0) r += taille; 
         return r;
         };
 
@@ -78,8 +78,8 @@ int Grille::compterVoisinsVivants(int x, int y) const { //impl de la grille tori
 	for (int dy = -1; dy <= 1; ++dy) { // dx est la coordonnée x décalée, dy la coordonnée y décalée
 		for (int dx = -1; dx <= 1; ++dx) { // on parcourt les 8 voisins
 			if (dx == 0 && dy == 0) continue;// on ne compte pas la cellule elle-même
-			int nx = wrap(x + dx, largeur); // nx est la coordonnée x du voisin
-			int ny = wrap(y + dy, hauteur); // ny est la coordonnée y du voisin
+			int nx = boucle(x + dx, largeur); // nx est la coordonnée x du voisin
+			int ny = boucle(y + dy, hauteur); // ny est la coordonnée y du voisin
             if (cellules[ny][nx] && cellules[ny][nx]->estVivante()) count++; //
         }
     }
@@ -167,13 +167,13 @@ void Grille::initialiserDepuisMatrice(const std::vector<std::vector<int>>& mat) 
 }
 
 std::vector<std::vector<int>> Grille::convertirEnMatrice() { //fonction utilisée dans la partie tests
-    std::vector<std::vector<int>> mat(hauteur, std::vector<int>(largeur, 0));
+    std::vector<std::vector<int>> matrice(hauteur, std::vector<int>(largeur, 0));
     for (int y = 0; y < hauteur; ++y) {
         for (int x = 0; x < largeur; ++x) {
             if (cellules[y][x] && cellules[y][x]->estVivante()) {
-                mat[y][x] = 1;
+                matrice[y][x] = 1;
             }
         }
     }
-    return mat;
+    return matrice;
 }

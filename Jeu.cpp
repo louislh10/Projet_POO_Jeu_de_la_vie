@@ -1,42 +1,53 @@
 ﻿#include "Jeu.h"
-#include <filesystem>
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
-
-namespace fs = std::filesystem;
+#include <direct.h>  //pour mkdir 
+#include <sys/stat.h>
 
 Jeu::Jeu(int lignes, int colonnes, std::unique_ptr<Regle> r)
     : grille(lignes, colonnes), regle(std::move(r)) {
 }
 
 void Jeu::chargerDepuisFichier(const std::string& chemin) {
-    // Déléguer au membre grille pour qu'il réutilise ses ressources
     grille.chargerDepuisFichier(chemin);
 }
 
-void Jeu::sauvegarderDansFichier(const std::string& _chemin) const {
+void Jeu::sauvegarderDansFichier(const std::string& chemin) const {
+    size_t pos = chemin.find_last_of("/\\");
+    if (pos != std::string::npos) {
+        std::string dossier = chemin.substr(0, pos);
 
-	fs::path chemin(_chemin);
-
-    if (!chemin.parent_path().empty() && !fs::exists(chemin.parent_path())) {
-        fs::create_directories(chemin.parent_path());
-
+        // le dossier existe déjà
+        struct stat info;
+        if (stat(dossier.c_str(), &info) != 0) {
+            // Le dossier existe pas on crée
+#ifdef _WIN32
+            _mkdir(dossier.c_str());
+#else
+            mkdir(dossier.c_str(),0755);
+#endif
+        }
     }
-    
+
     std::ofstream file(chemin);
     if (!file.is_open()) {
-        throw std::runtime_error("Impossible d'ouvrir le fichier : " + _chemin);
+        throw std::runtime_error("Impossible d'ouvrir le fichier : " + chemin);
     }
 
-    // ✅ CORRECTION : Format correct = hauteur largeur
+    // Première ligne : dimensions
     file << grille.getHauteur() << " " << grille.getLargeur() << "\n";
 
-    // ✅ CORRECTION : Boucle sur hauteur puis largeur
+    // Ensuite on écrit toute la grille
     for (int i = 0; i < grille.getHauteur(); ++i) {
         for (int j = 0; j < grille.getLargeur(); ++j) {
             Cellule* c = grille.getCellule(j, i);
-            file << (c->estVivante() ? 1 : 0) << " ";
+            if (c && c->estVivante()) {
+                file << "1 ";
+            }
+            else {
+                file << "0 ";
+            }
         }
         file << "\n";
     }
