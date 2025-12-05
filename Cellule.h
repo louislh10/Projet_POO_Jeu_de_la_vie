@@ -13,7 +13,7 @@ public:
     explicit Cellule(bool etat = false);
     virtual ~Cellule();
 
-    // calcul de l'état futur (délégué à la Regle)
+    // calcul de letat futur
     void calculerEtatFutur(const Regle& regle, int nbVoisinsVivants);
 
     

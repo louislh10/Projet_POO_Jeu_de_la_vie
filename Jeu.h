@@ -21,4 +21,4 @@ public:
     const Grille& getGrille() const { return grille; }
 };
 
-#endif
+#endif //fichier inclu une fois

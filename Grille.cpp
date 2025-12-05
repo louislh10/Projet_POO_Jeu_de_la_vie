@@ -7,11 +7,13 @@
 #include <iostream>
 
 
-Grille::Grille(int l, int h) : largeur(l), hauteur(h) { // 
+Grille::Grille(int l, int h) : largeur(l), hauteur(h) { 
     cellules.resize(hauteur);
     for (int y = 0; y < hauteur; ++y) {
         cellules[y].resize(largeur);
+
         for (int x = 0; x < largeur; ++x) {
+
             cellules[y][x] = std::make_unique<CelluleMorte>();
         }
     }
@@ -19,10 +21,13 @@ Grille::Grille(int l, int h) : largeur(l), hauteur(h) { //
 
 Grille::~Grille() = default;
 
-// libérer toutes les cellules
+
+
+
 void Grille::libererCellules() { 
     for (int y = 0; y < hauteur; ++y) {
         for (int x = 0; x < largeur; ++x) {
+
             cellules[y][x].reset();
         }
     }
@@ -38,7 +43,7 @@ int Grille::getHauteur() const {
 
 void Grille::setCelluleVivante(int x, int y) {
     if (!dansBornes(x, y)) {
-        std::cerr << "Erreur setCelluleVivante : indices hors bornes (" << x << ", " << y << ")\n";
+        std::cerr << "erreur dans setCelluleVivante , indice hors bornes (" << x << ", " << y << ")\n";
         return;
     }
     cellules[y][x] = std::make_unique<CelluleVivante>();
@@ -66,24 +71,24 @@ Cellule* Grille::getCellule(int x, int y) const {
 bool Grille::dansBornes(int x, int y) const {
     return x >= 0 && x < largeur && y >= 0 && y < hauteur;
 }
-
 int Grille::compterVoisinsVivants(int x, int y) const { //impl de la grille torique
 	auto boucle = [](int coord, int taille) -> int { //  sert a boucler une grille
         int r = coord % taille; 
-        if (r < 0) r += taille; 
+		if (r < 0) r += taille; 
         return r;
         };
 
-    int count = 0;
-	for (int dy = -1; dy <= 1; ++dy) { // dx est la coordonnée x décalée, dy la coordonnée y décalée
-		for (int dx = -1; dx <= 1; ++dx) { // on parcourt les 8 voisins
-			if (dx == 0 && dy == 0) continue;// on ne compte pas la cellule elle-même
-			int nx = boucle(x + dx, largeur); // nx est la coordonnée x du voisin
-			int ny = boucle(y + dy, hauteur); // ny est la coordonnée y du voisin
-            if (cellules[ny][nx] && cellules[ny][nx]->estVivante()) count++; //
+    int compt = 0;
+	for (int decy = -1; decy <= 1; ++decy) { // dx est la coordonnée x décalée, dy la coordonnée y décalée
+		for (int decx = -1; decx <= 1; ++decx) { // on parcourt les 8 voisins
+			if (decx == 0 && decy == 0) continue;// on ne compte pas la cellule elle-même
+			int coordVx = boucle(x + decx, largeur); // nx est la coordonnée x du voisin
+			int coordVy = boucle(y + decy, hauteur); // ny est la coordonnée y du voisin
+            if (cellules[coordVy][coordVx] && cellules[coordVy][coordVx]->estVivante()) 
+                compt++; 
         }
     }
-    return count;
+    return compt;
 }
 
 void Grille::appliquerRegle(const Regle& regle) {
@@ -116,12 +121,12 @@ void Grille::appliquerRegle(const Regle& regle) {
 void Grille::chargerDepuisFichier(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        throw std::runtime_error("Impossible d'ouvrir le fichier " + filename);
+        throw std::runtime_error("impossible d'ouvrir le fichier " + filename);
     }
 
     int h, l;
     file >> h >> l;
-    if (h <= 0 || l <= 0) throw std::runtime_error("Dimensions invalides dans le fichier");
+    if (h <= 0 || l <= 0) throw std::runtime_error("Dimensions invalides dans le fichier"); 
 
     libererCellules();
 

@@ -4,11 +4,9 @@
 #include "Jeu.h"
 #include "RegleC.h"
 #include "FenetreSFML.h"
-#include "Cellule.h" // AJOUT : inclure le header complet de Cellule
+#include "Cellule.h"
 
 using namespace std;
-
-// Affichage console
 void afficherConsole(const Jeu& jeu) {
     const Grille& g = jeu.getGrille();
     for (int y = 0; y < g.getHauteur(); ++y) {
@@ -59,13 +57,13 @@ int main() {
     cout << "\n Grille initiale de testfichier.txt :\n";
     afficherConsole(jeu);
 
-    if (choix == 1) { // Mode console
+    if (choix == 1) { 
         int max_iter;
         cout << "Entrez le nb iterations de votre choix : ";
         while (!(cin >> max_iter) || max_iter <= 0) {
             cerr << "Entree non valide..\n";
             cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // le buffer signifie qu'on vide le flux d'entrée pour éviter une boucle infinie
+			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // le buffer signifie quon vide le flux dentrée pour eviter une boucle infinie
 			cout << "Entrez le nb iterations de votre choix : ";
         }
         int iteration = 0;
@@ -87,7 +85,7 @@ int main() {
             this_thread::sleep_for(chrono::milliseconds(50));
         }
     }
-    else if (choix == 2) {  // Mode graphique avec SFML
+    else if (choix == 2) {  
         FenetreSFML fenetre(jeu, 20);
         fenetre.afficher();
     }

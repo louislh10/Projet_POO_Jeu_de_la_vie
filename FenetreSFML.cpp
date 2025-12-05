@@ -3,19 +3,23 @@
 
 FenetreSFML::FenetreSFML(Jeu& j, int tailleCase)
     : jeu(j), tailleCase(tailleCase),
+
     window(sf::VideoMode(
         static_cast<unsigned int>(j.getGrille().getLargeur()* tailleCase),
         static_cast<unsigned int>(j.getGrille().getHauteur()* tailleCase)),
-        "Jeu de la Vie - SFML") {
+        "Jeu de la Vie mode sfml") {
+
     if (j.getGrille().getLargeur() == 0 || j.getGrille().getHauteur() == 0) {
-        throw std::runtime_error("Grille vide, impossible d'afficher.");
+
+        throw std::runtime_error("Grille vide qui est impossible d'afficher.");
     }
 }
 
 void FenetreSFML::afficher() {
     while (window.isOpen()) {
+
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window.pollEvent(event))//enregistrement actions utilisateur 
             if (event.type == sf::Event::Closed)
                 window.close();
         }
@@ -31,7 +35,7 @@ void FenetreSFML::afficher() {
                 Cellule* cellule = g.getCellule(j, i); 
 
                 if (!cellule) {
-                    std::cerr << "[ERREUR SFML] Cellule nulle en j=" << j << ", i=" << i << std::endl;
+                    std::cerr << "il y a erreur sfml, cellule nulle en j=" << j << ", i=" << i << std::endl;
                     continue;
                 }
 
@@ -40,7 +44,7 @@ void FenetreSFML::afficher() {
                     static_cast<float>(tailleCase - 1)
                 ));
 
-                forme.setPosition(
+                forme.setPosition(//alignement selon la pos
                     static_cast<float>(j * tailleCase),
                     static_cast<float>(i * tailleCase)
                 );
@@ -52,6 +56,6 @@ void FenetreSFML::afficher() {
         }
 
         window.display();
-        sf::sleep(sf::milliseconds(100));
+        sf::sleep(sf::milliseconds(100)); 
     }
 }

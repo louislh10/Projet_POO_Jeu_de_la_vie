@@ -14,19 +14,19 @@ void Jeu::chargerDepuisFichier(const std::string& chemin) {
 }
 
 void Jeu::sauvegarderDansFichier(const std::string& chemin) const {
-    size_t pos = chemin.find_last_of("/\\");
+    size_t pos = chemin.find_last_of("/\\"); 
     if (pos != std::string::npos) {
         std::string dossier = chemin.substr(0, pos);
 
-        // le dossier existe déjà
-        struct stat info;
+        // verif dossier existe deja ou pas
+        struct stat info; 
         if (stat(dossier.c_str(), &info) != 0) {
-            // Le dossier existe pas on crée
+            // Le dossier existe pas on creer
 #ifdef _WIN32
             _mkdir(dossier.c_str());
 #else
-            mkdir(dossier.c_str(),0755);
-#endif
+            mkdir(dossier.c_str(),0755); //(si madame gaudon utilise linux)
+#endif 
         }
     }
 
@@ -35,10 +35,11 @@ void Jeu::sauvegarderDansFichier(const std::string& chemin) const {
         throw std::runtime_error("Impossible d'ouvrir le fichier : " + chemin);
     }
 
-    // Première ligne : dimensions
+    
     file << grille.getHauteur() << " " << grille.getLargeur() << "\n";
 
-    // Ensuite on écrit toute la grille
+
+
     for (int i = 0; i < grille.getHauteur(); ++i) {
         for (int j = 0; j < grille.getLargeur(); ++j) {
             Cellule* c = grille.getCellule(j, i);
