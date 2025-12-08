@@ -63,8 +63,8 @@ int main() {
         while (!(cin >> max_iter) || max_iter <= 0) {
             cerr << "Entree non valide..\n";
             cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // le buffer signifie quon vide le flux dentrée pour eviter une boucle infinie
-			cout << "Entrez le nb iterations de votre choix : ";
+			cin.ignore(numeric_limits<streamsize>::max(), '\n'); //un buffer signifie quon vide le flux dentrée pour eviter une boucle infini
+			cout << "Entrée le nb iterations de votre choix : ";
         }
         int iteration = 0;
         while (iteration < max_iter) {

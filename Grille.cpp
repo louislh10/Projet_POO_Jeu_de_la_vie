@@ -171,7 +171,7 @@ void Grille::initialiserDepuisMatrice(const std::vector<std::vector<int>>& mat) 
     }
 }
 
-std::vector<std::vector<int>> Grille::convertirEnMatrice() { //fonction utilisée dans la partie tests
+std::vector<std::vector<int>> Grille::convertirEnMatrice() { //fonction utilisé dans la partie tests
     std::vector<std::vector<int>> matrice(hauteur, std::vector<int>(largeur, 0));
     for (int y = 0; y < hauteur; ++y) {
         for (int x = 0; x < largeur; ++x) {

@@ -19,11 +19,12 @@ void Jeu::sauvegarderDansFichier(const std::string& chemin) const {
         std::string dossier = chemin.substr(0, pos);
 
         // verif dossier existe deja ou pas
-        struct stat info; 
+        struct stat info;
         if (stat(dossier.c_str(), &info) != 0) {
             // Le dossier existe pas on creer
 #ifdef _WIN32
-            _mkdir(dossier.c_str());
+            int result = _mkdir(dossier.c_str());
+            (void)result;//ignoré le resulat pcq le compilateur met un warn
 #else
             mkdir(dossier.c_str(),0755); //(si madame gaudon utilise linux)
 #endif 
